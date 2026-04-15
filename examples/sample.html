@@ -1,0 +1,88 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 20px;
+      color: #1f2937;
+      background: #ffffff;
+    }
+    .tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .tab {
+      padding: 8px 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 999px;
+      background: #f3f4f6;
+      color: #475569;
+      cursor: pointer;
+    }
+    .tab.active {
+      background: #dbeafe;
+      color: #1d4ed8;
+      border-color: #60a5fa;
+    }
+    .panel { display: none; }
+    .panel.active { display: block; }
+    .card {
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 12px;
+      background: #ffffff;
+    }
+    .title {
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .body {
+      color: #4b5563;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <div class="tabs">
+    <button class="tab active" onclick="showPanel(0)">Overview</button>
+    <button class="tab" onclick="showPanel(1)">Details</button>
+  </div>
+
+  <div class="panel active">
+    <div class="card">
+      <div class="title">Section one</div>
+      <div class="body">This sample demonstrates local HTML embedding with UTF-8 text, tabs, and collapsible card sections.</div>
+    </div>
+    <div class="card">
+      <div class="title">Section two</div>
+      <div class="body">Use this file together with the example Markdown notes in this repository.</div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="card">
+      <div class="title">Interactive panel</div>
+      <div class="body">Tabs work because the plugin allows scripts inside the embedded iframe.</div>
+    </div>
+    <div class="card">
+      <div class="title">Relative asset support</div>
+      <div class="body">The plugin injects a base URL so relative paths inside local HTML can resolve correctly.</div>
+    </div>
+  </div>
+
+  <script>
+    const panels = document.querySelectorAll('.panel');
+    const tabs = document.querySelectorAll('.tab');
+    function showPanel(index) {
+      panels.forEach((panel, i) => panel.classList.toggle('active', i === index));
+      tabs.forEach((tab, i) => tab.classList.toggle('active', i === index));
+    }
+  </script>
+</body>
+</html>
