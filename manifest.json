@@ -5,6 +5,5 @@
   "minAppVersion": "1.5.0",
   "description": "Embed a vault-local HTML file inside notes via an html-embed code block.",
   "author": "shygoly",
-  "isDesktopOnly": true,
-  "main": "main.js"
+  "isDesktopOnly": true
 }

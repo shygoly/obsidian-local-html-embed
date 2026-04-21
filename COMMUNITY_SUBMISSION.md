@@ -14,6 +14,12 @@ Release files:
 - `manifest.json`
 - `versions.json`
 
+Release validation:
+
+- Obsidian community validation does not read the source zip.
+- The GitHub release for the version in `manifest.json` must include `main.js` and `manifest.json` as individual uploaded assets.
+- This repository includes `npm run validate:release` and `.github/workflows/release.yml` to keep those assets in sync.
+
 Security note:
 
 This plugin embeds vault-local HTML and allows scripts inside a sandboxed iframe so interactive HTML documents can work. Users should only embed trusted local HTML files.

@@ -1,0 +1,9 @@
+{
+  "name": "obsidian-local-html-embed",
+  "private": true,
+  "version": "0.0.1",
+  "scripts": {
+    "prepare:release": "node scripts/prepare-release.js",
+    "validate:release": "node scripts/validate-release.js"
+  }
+}

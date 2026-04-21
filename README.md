@@ -29,6 +29,19 @@ It is useful when you keep standalone HTML reports, diagrams, dashboards, or int
 4. Restart Obsidian or reload plugins.
 5. Enable **Local HTML Embed** in Settings → Community plugins.
 
+## Release process
+
+This repository is validated against Obsidian's community plugin checks.
+
+Before publishing a version:
+
+1. Make sure `manifest.json`, `main.js`, and `versions.json` in the repo root are final.
+2. Run `npm run validate:release`.
+3. Create and push a git tag that exactly matches `manifest.json`'s `version`, for example `0.0.1`.
+4. Let GitHub Actions upload `main.js`, `manifest.json`, and `versions.json` as individual assets on that release.
+
+Do not rely on the auto-generated source zip or tarball. The community validator checks for the individual uploaded assets.
+
 ## Usage
 
 ### Embed a file by path
