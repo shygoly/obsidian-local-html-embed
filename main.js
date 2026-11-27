@@ -311,8 +311,47 @@ module.exports = class LocalHtmlEmbedPlugin extends Plugin {
             iframe.style.height = `${nextHeight}px`;
           };
 
-          resizeToMaxPanelHeight();
-          doc.querySelectorAll('details').forEach((details) => details.addEventListener('toggle', resizeToMaxPanelHeight));
+          // Pages without `.panel` tabs (e.g. apps that render their views with JavaScript):
+          // follow the content height for as long as the embed is shown.
+          const followContentHeight = () => {
+            const win = doc.defaultView;
+            if (!doc.body || !win?.ResizeObserver) return;
+
+            const measure = () => {
+              const marginBottom = parseFloat(win.getComputedStyle(doc.body).marginBottom) || 0;
+              return Math.ceil(doc.body.getBoundingClientRect().bottom + marginBottom);
+            };
+
+            let lastHeight = 0;
+            let growthTimes = [];
+            const observer = new win.ResizeObserver(() => {
+              const nextHeight = measure();
+              if (Math.abs(nextHeight - lastHeight) <= 1) return;
+
+              // A page sized from the viewport (e.g. `100vh` plus a margin) grows every time the
+              // iframe grows. Stop following if it keeps growing many times within a second.
+              if (nextHeight > lastHeight) {
+                const now = Date.now();
+                growthTimes = growthTimes.filter((time) => now - time < 1000);
+                growthTimes.push(now);
+                if (growthTimes.length > 30) {
+                  observer.disconnect();
+                  return;
+                }
+              }
+
+              lastHeight = nextHeight;
+              iframe.style.height = `${nextHeight}px`;
+            });
+            observer.observe(doc.body);
+          };
+
+          if (!requestedHeight && panels.length === 0) {
+            followContentHeight();
+          } else {
+            resizeToMaxPanelHeight();
+            doc.querySelectorAll('details').forEach((details) => details.addEventListener('toggle', resizeToMaxPanelHeight));
+          }
         });
 
         iframe.addEventListener('error', () => {

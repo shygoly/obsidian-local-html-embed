@@ -9,7 +9,7 @@ It is useful when you keep standalone HTML reports, diagrams, dashboards, or int
 - Embed a vault-local `.html` file in an iframe.
 - Use explicit vault-relative paths or `auto` mode.
 - Optional fixed iframe height.
-- Automatic height mode when no height is provided.
+- Automatic height mode when no height is provided: tabbed `.panel` layouts get the height of their tallest panel; other pages follow their content height as it changes (tab switches, filters, expanding sections).
 - Preserves UTF-8 text and supports relative assets with a generated `<base>` URL.
 - Injects fallback theme variables for common tab/card HTML layouts.
 - Adds optional collapsible presentation for common section-based HTML layouts.
@@ -64,6 +64,8 @@ examples/sample.html
 ````
 
 The second line may be a number or a pixel value such as `900px`.
+
+Leave the second line out to size the iframe automatically. For pages without `.panel` tabs, the iframe keeps following the page's height, so content rendered or changed by JavaScript is never cut off. Avoid viewport-based heights (`100vh`) on the page's outer layout in this mode: the iframe *is* the viewport, so such a page cannot shrink.
 
 ### Use auto mode
 
